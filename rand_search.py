@@ -55,7 +55,7 @@ class RandSearcher:
     ]
 
     if outfile:
-      with open(outfile,'ab') as f: 
+      with open(outfile,'wb') as f: 
         if self.compfun: pk.dump((len(trials),True),f)
         else: pk.dump((len(trials),False),f)
 
