@@ -64,8 +64,8 @@ class RandSearcher:
       if outfile: 
         with open(outfile,'ab') as f:  pk.dump((trial,res),f)
       self.results.append((trial,res))      
-      if self.compfun and (not self.best or self.compfun(self.best,res) < 1):
-        self.best = res
+      if self.compfun and (not self.best or self.compfun(self.best[1],res) < 1):
+        self.best = (trial,res)
 
     if outfile and self.compfun:
       with open(outfile,'ab') as f: pk.dump(self.best,f)
