@@ -54,10 +54,20 @@ class RandSearcher:
       for x in xrange(num_experiments)
     ]
 
+    if outfile:
+      with open(outfile,'ab') as f: 
+        if self.compfun: pk.dump((len(trials),True),f)
+        else: pk.dump((len(trials),False),f)
+
     for trial in trials:
       res = self.bbox(**trial)
-      if outfile: with open(outfile,'ab'):  pk.dump((trial,res),outfile)
+      if outfile: 
+        with open(outfile,'ab') as f:  pk.dump((trial,res),f)
       self.results.append((trial,res))      
-      if self.compfun and (self.compfun(self.best,res) < 1): self.best = res
+      if self.compfun and (not self.best or self.compfun(self.best,res) < 1):
+        self.best = res
+
+    if outfile and self.compfun:
+      with open(outfile,'ab') as f: pk.dump(self.best,f)
 
     return self.results
